@@ -10,8 +10,17 @@ public class MovieFrontendService : MovieStream.MovieStreamBase
 
     public MovieFrontendService(GrpcClientFactory grpcClientFactory)
     {
-        _clients = _clients.Append(grpcClientFactory.CreateClient<SingleMovie.SingleMovieClient>("url0"));
-        _clients = _clients.Append(grpcClientFactory.CreateClient<SingleMovie.SingleMovieClient>("url1"));
+        for (var i = 0; i < 10; i++)
+        {
+            try
+            {
+                _clients = _clients.Append(grpcClientFactory.CreateClient<SingleMovie.SingleMovieClient>($"url{i}"));
+            }
+            catch
+            {
+                // ignored
+            }
+        }
     }
 
     public override async Task<GetMoviesReply> GetMovies(GetMoviesRequest request, ServerCallContext context)
