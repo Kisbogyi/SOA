@@ -9,8 +9,13 @@ var backendUrls = sections.AsEnumerable().Select(x => x.Value).Where(x => !strin
 
 for (var i = 0; i < backendUrls.Length; i++)
 {
+    var backendUrl = backendUrls[i];
+    var name = $"url{i}";
     builder.Services
-        .AddGrpcClient<SingleMovie.SingleMovieClient>($"url{i}", o => { o.Address = new Uri(backendUrls[0]!); })
+        .AddGrpcClient<SingleMovie.SingleMovieClient>(name, o =>
+        {
+            o.Address = new Uri(backendUrl!);
+        })
         .ConfigurePrimaryHttpMessageHandler(() =>
         {
             var handler = new HttpClientHandler();

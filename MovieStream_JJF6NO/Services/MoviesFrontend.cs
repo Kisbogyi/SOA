@@ -14,13 +14,15 @@ public class MovieFrontendService : MovieStream.MovieStreamBase
         {
             try
             {
-                _clients = _clients.Append(grpcClientFactory.CreateClient<SingleMovie.SingleMovieClient>($"url{i}"));
+                var clnt = grpcClientFactory.CreateClient<SingleMovie.SingleMovieClient>($"url{i}");
+                _clients = _clients.Append(clnt);
             }
-            catch
+            catch (Exception ex)
             {
-                // ignored
+                Console.WriteLine(ex.Message);
             }
         }
+
     }
 
     public override async Task<GetMoviesReply> GetMovies(GetMoviesRequest request, ServerCallContext context)
