@@ -1,0 +1,25 @@
+using Grpc.Core;
+using Streaming;
+
+namespace MovieE_JJF6NO;
+
+public class EMicroservice : SingleMovie.SingleMovieBase
+{
+    private const string E =
+        "271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319525101901157383418793070215408914993488416750924476146066808226480016847741185374234544243710753907774499206955170276183860626133138458300075204493382656029760673711320070932870912744374704723069697720931014169283681902551510865746377211125238978442505695369677078544996996794686445490598793163688923009879312";
+
+    public override Task<GetTitleReply> GetTitle(GetTitleRequest request, ServerCallContext context)
+    {
+        return Task.FromResult(new GetTitleReply { Title = "e" });
+    }
+
+    public override Task<GetLengthReply> GetLength(GetLengthRequest request, ServerCallContext context)
+    {
+        return Task.FromResult(new GetLengthReply { Length = 500 });
+    }
+
+    public override async Task<GetFramesReply> GetFrames(GetFramesRequest request, ServerCallContext context)
+    {
+        return new GetFramesReply { Frame = { E.Select(c => int.Parse(c.ToString())) } };
+    }
+}

@@ -1,0 +1,46 @@
+services:
+  hm-backendPi:
+    container_name: movie-pi-JJF6NO
+    image: localhost/moviepi.backend:latest
+    build:
+      context: ./MoviePi_JJF6NO
+    environment:
+    - ASPNETCORE_URLS=https://+;http://+
+    - ASPNETCORE_Kestrel__Certificates__Default__Password=mypassword
+    - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hm-backendPi.pfx
+    networks:
+    - hello-micro-network
+    volumes:
+      - ./MoviePi_JJF6NO/certs/:/https/:z
+  hm-backendE:
+    container_name: movie-e-JJF6NO
+    image: localhost/moviee.backend:latest
+    build:
+      context: ./MovieE_JJF6NO
+    environment:
+    - ASPNETCORE_URLS=https://+;http://+
+    - ASPNETCORE_Kestrel__Certificates__Default__Password=mypassword
+    - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hm-backendE.pfx
+    networks:
+    - hello-micro-network
+    volumes:
+      - ./MovieE_JJF6NO/certs/:/https/:z
+  hm-frontend:
+    container_name: movie-stream-JJF6NO
+    image: localhost/movies.frontend:latest
+    build:
+      context: ./MovieStream_JJF6NO
+    ports:
+    - 5100:5100
+    - 5101:5101
+    environment:
+    - ASPNETCORE_HTTPS_PORT=5101
+    - ASPNETCORE_Kestrel__Certificates__Default__Password=mypassword
+    - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hm-frontend.pfx
+    networks:
+    - hello-micro-network
+    volumes:
+    - ./MovieStream_JJF6NO/certs:/https/:z
+networks:
+  hello-micro-network:
+    driver: bridge

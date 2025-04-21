@@ -1,0 +1,24 @@
+syntax = "proto3";
+option csharp_namespace = "Streaming";
+option java_package = "streaming";
+package Streaming;
+service MovieStream {
+  rpc GetMovies (GetMoviesRequest) returns (GetMoviesReply);
+  rpc Watch (WatchRequest) returns (stream WatchReply);
+}
+message GetMoviesRequest {
+}
+message GetMoviesReply {
+  repeated MovieInfo movies = 1;
+}
+message MovieInfo {
+  string title = 1;
+  int32 length = 2;
+}
+message WatchRequest {
+  string title = 1;
+  int32 startPosition = 2;
+}
+message WatchReply {
+  int32 frame = 1;
+}

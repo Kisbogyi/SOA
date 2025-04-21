@@ -1,0 +1,24 @@
+syntax = "proto3";
+option csharp_namespace = "Streaming";
+option java_package = "streaming";
+package Streaming;
+service SingleMovie {
+  rpc GetTitle (GetTitleRequest) returns (GetTitleReply);
+  rpc GetLength (GetLengthRequest) returns (GetLengthReply);
+  rpc GetFrames (GetFramesRequest) returns (GetFramesReply);
+}
+message GetTitleRequest {
+}
+message GetTitleReply {
+  string title = 1;
+}
+message GetLengthRequest {
+}
+message GetLengthReply {
+  int32 length = 1;
+}
+message GetFramesRequest {
+}
+message GetFramesReply {
+  repeated int32 frame = 1;
+}
