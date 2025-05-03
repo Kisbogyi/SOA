@@ -1,0 +1,24 @@
+{
+  "name": "node_neptun",
+  "version": "1.0.0",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "mongoose": "^8.13.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/http-errors": "^2.0.4",
+    "@types/node": "^22.14.0",
+    "typescript": "^5.8.3"
+  }
+}
