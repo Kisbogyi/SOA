@@ -25,9 +25,9 @@ router.get('/', async (req, res, next) => {
 	const movies = await Movie.find({}, '-_id title year director actor');
 	if (movies) {
 		// Send response:
-		res.send(JSON.stringify({movie: movies}));
+		res.json(JSON.stringify({movie: movies}));
 	} else {
-		return next(createError.NotFound())
+		return res.status(404).send()
 	}
 }
 );
@@ -36,7 +36,7 @@ router.post('/', jsonParser, async (req, res, next) => {
 		req.body._id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 		const movie = new Movie(req.body);
 		await movie.save();
-		res.send(JSON.stringify({id: movie._id}));	
+		res.json(JSON.stringify({id: movie._id}));	
 	}
 )
 
@@ -45,12 +45,12 @@ router.get('/find', async (req, res, next) => {
 	const orderBy = req.query.orderby;	
 	if (orderBy === "Title"){
 		const ids = await Movie.find({year: year}, '_id').sort({title: 1});
-		res.send(JSON.stringify({id: ids.map((collection) => collection._id)}));
+		res.json(JSON.stringify({id: ids.map((collection) => collection._id)}));
 		
 	}
 	else {
 		const ids = await Movie.find({year: year}, '_id').sort({director: 1});
-		res.send(JSON.stringify({id: ids.map((collection) => collection._id)}));
+		res.json(JSON.stringify({id: ids.map((collection) => collection._id)}));
 	}
 });
 
@@ -60,9 +60,9 @@ router.get('/:id', async (req, res, next) => {
 	const movies = await Movie.findOne({_id: id}, '-_id title year director actor');
 	if (movies) {
 		// Send response:
-		res.send(JSON.stringify(movies));
+		res.json(JSON.stringify(movies));
 	} else {
-		return next(createError.NotFound())
+		return res.status(404).send()
 	}
 }
 );
@@ -74,14 +74,14 @@ router.put('/:id', jsonParser, async (req, res, next) => {
 		req.body._id = id;
 		await new Movie(req.body).save();
 	}
-	res.send();
+	res.json();
 	}
 )
 
 router.delete('/:id', async (req, res, next) => {
 	const id = Number(req.params.id);
 	await Movie.deleteOne({_id: id}, req.body);
-	res.send();
+	res.json();
 });
 
 
