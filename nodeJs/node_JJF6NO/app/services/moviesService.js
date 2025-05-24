@@ -25,7 +25,7 @@ router.get('/', async (req, res, next) => {
 	const movies = await Movie.find({}, '-_id title year director actor');
 	if (movies) {
 		// Send response:
-		res.json(JSON.stringify({movie: movies}));
+		res.json({movie: movies});
 	} else {
 		return res.status(404).send()
 	}
@@ -45,7 +45,7 @@ router.get('/find', async (req, res, next) => {
 	const orderBy = req.query.orderby;	
 	if (orderBy === "Title"){
 		const ids = await Movie.find({year: year}, '_id').sort({title: 1});
-		res.json(JSON.stringify({id: ids.map((collection) => collection._id)}));
+		res.json({id: ids.map((collection) => collection._id)});
 		
 	}
 	else {
@@ -60,7 +60,7 @@ router.get('/:id', async (req, res, next) => {
 	const movies = await Movie.findOne({_id: id}, '-_id title year director actor');
 	if (movies) {
 		// Send response:
-		res.json(JSON.stringify(movies));
+		res.json(movies);
 	} else {
 		return res.status(404).send()
 	}
