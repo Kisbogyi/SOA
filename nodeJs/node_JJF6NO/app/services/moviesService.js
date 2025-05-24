@@ -36,7 +36,7 @@ router.post('/', jsonParser, async (req, res, next) => {
 		req.body._id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 		const movie = new Movie(req.body);
 		await movie.save();
-		res.json(JSON.stringify({id: movie._id}));	
+		res.json({id: movie._id});	
 	}
 )
 
@@ -50,7 +50,7 @@ router.get('/find', async (req, res, next) => {
 	}
 	else {
 		const ids = await Movie.find({year: year}, '_id').sort({director: 1});
-		res.json(JSON.stringify({id: ids.map((collection) => collection._id)}));
+		res.json({id: ids.map((collection) => collection._id)});
 	}
 });
 
